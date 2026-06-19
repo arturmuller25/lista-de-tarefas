@@ -48,7 +48,7 @@ class TarefaTest extends TestCase
     public function test_titulo_e_obrigatorio(): void
     {
         $this->post('/tarefas', ['titulo' => ''])
-            ->assertSessionHasErrors('titulo');
+            ->assertSessionHasErrors(['titulo' => 'O título é obrigatório.']);
     }
 
     public function test_cria_tarefa_com_imagem(): void

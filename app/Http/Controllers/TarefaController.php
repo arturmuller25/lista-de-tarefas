@@ -39,11 +39,42 @@ class TarefaController extends Controller
     }
 
     /**
+     * Mensagens de validação em português.
+     *
+     * @return array<string, string>
+     */
+    private function mensagens(): array
+    {
+        return [
+            'titulo.required' => 'O título é obrigatório.',
+            'titulo.min'      => 'O título deve ter pelo menos :min caracteres.',
+            'titulo.max'      => 'O título não pode passar de :max caracteres.',
+            'imagem.image'    => 'O arquivo enviado precisa ser uma imagem.',
+            'imagem.mimes'    => 'A imagem deve ser dos tipos: :values.',
+            'imagem.max'      => 'A imagem não pode passar de 2 MB.',
+        ];
+    }
+
+    /**
+     * Nomes amigáveis dos atributos nas mensagens de erro.
+     *
+     * @return array<string, string>
+     */
+    private function atributos(): array
+    {
+        return [
+            'titulo'    => 'título',
+            'descricao' => 'descrição',
+            'imagem'    => 'imagem',
+        ];
+    }
+
+    /**
      * Salva uma nova tarefa (com imagem opcional).
      */
     public function gravar(Request $request)
     {
-        $dados = $request->validate($this->regras());
+        $dados = $request->validate($this->regras(), $this->mensagens(), $this->atributos());
 
         // Faz upload da imagem, se enviada (uma por tarefa).
         if ($request->hasFile('imagem')) {
@@ -69,7 +100,7 @@ class TarefaController extends Controller
      */
     public function atualizar(Request $request, Tarefa $tarefa)
     {
-        $dados = $request->validate($this->regras());
+        $dados = $request->validate($this->regras(), $this->mensagens(), $this->atributos());
 
         // Se uma nova imagem for enviada, remove a antiga e guarda a nova.
         if ($request->hasFile('imagem')) {
@@ -94,7 +125,8 @@ class TarefaController extends Controller
             'concluida' => ! $tarefa->concluida,
         ]);
 
-        return redirect()->route('tarefas.index');
+        return redirect()->route('tarefas.index')
+            ->with('mensagem', $tarefa->concluida ? 'Tarefa concluída!' : 'Tarefa reaberta!');
     }
 
     /**
