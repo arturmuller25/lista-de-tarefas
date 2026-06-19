@@ -7,7 +7,10 @@
     <p class="subtitle">Tarefas removidas. Você pode restaurá-las ou excluí-las definitivamente.</p>
 
     @if ($tarefas->isEmpty())
-        <div class="card empty">A lixeira está vazia. 🧹</div>
+        <div class="card empty">
+            <x-icon name="trash" />
+            <p>A lixeira está vazia.</p>
+        </div>
     @else
         <ul class="task-list">
             @foreach ($tarefas as $tarefa)
@@ -32,15 +35,19 @@
                         <form action="{{ route('tarefas.restaurar', $tarefa) }}" method="POST" class="inline-form">
                             @csrf
                             @method('PATCH')
-                            <button type="submit" class="btn btn-sm btn-success">Restaurar</button>
+                            <button type="submit" class="btn btn-icon is-done" title="Restaurar tarefa" aria-label="Restaurar tarefa">
+                                <x-icon name="restore" />
+                            </button>
                         </form>
 
                         {{-- Excluir definitivamente --}}
                         <form action="{{ route('tarefas.destruir', $tarefa) }}" method="POST" class="inline-form"
-                              onsubmit="return confirm('Excluir esta tarefa DEFINITIVAMENTE? Esta ação não pode ser desfeita.');">
+                              onsubmit="return confirm('Excluir esta tarefa definitivamente? Esta ação não pode ser desfeita.');">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-sm btn-danger">Excluir de vez</button>
+                            <button type="submit" class="btn btn-icon is-danger" title="Excluir definitivamente" aria-label="Excluir definitivamente">
+                                <x-icon name="trash" />
+                            </button>
                         </form>
                     </div>
                 </li>
