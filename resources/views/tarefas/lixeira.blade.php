@@ -22,7 +22,9 @@
                         @if ($tarefa->descricao)
                             <div class="task-desc">{{ $tarefa->descricao }}</div>
                         @endif
-                        <div class="task-meta">Removida {{ $tarefa->deleted_at->locale('pt_BR')->diffForHumans() }}</div>
+                        @if ($tarefa->deleted_at)
+                            <div class="task-meta">Removida {{ $tarefa->deleted_at->locale('pt_BR')->diffForHumans() }}</div>
+                        @endif
                     </div>
 
                     <div class="task-actions">

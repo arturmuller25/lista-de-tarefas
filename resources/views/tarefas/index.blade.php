@@ -13,7 +13,7 @@
             @csrf
 
             <label for="titulo">Título *</label>
-            <input type="text" name="titulo" id="titulo" value="{{ old('titulo') }}" placeholder="O que precisa ser feito?" required>
+            <input type="text" name="titulo" id="titulo" value="{{ old('titulo') }}" placeholder="O que precisa ser feito?" required minlength="3" maxlength="255">
 
             <label for="descricao">Descrição</label>
             <textarea name="descricao" id="descricao" placeholder="Detalhes (opcional)">{{ old('descricao') }}</textarea>
@@ -50,7 +50,9 @@
                         @if ($tarefa->descricao)
                             <div class="task-desc">{{ $tarefa->descricao }}</div>
                         @endif
-                        <div class="task-meta">Criada {{ $tarefa->created_at->locale('pt_BR')->diffForHumans() }}</div>
+                        @if ($tarefa->created_at)
+                            <div class="task-meta">Criada {{ $tarefa->created_at->locale('pt_BR')->diffForHumans() }}</div>
+                        @endif
                     </div>
 
                     <div class="task-actions">

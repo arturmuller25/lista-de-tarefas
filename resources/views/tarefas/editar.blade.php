@@ -28,7 +28,7 @@
             @method('PUT')
 
             <label for="titulo">Título *</label>
-            <input type="text" name="titulo" id="titulo" value="{{ old('titulo', $tarefa->titulo) }}" required>
+            <input type="text" name="titulo" id="titulo" value="{{ old('titulo', $tarefa->titulo) }}" required minlength="3" maxlength="255">
 
             <label for="descricao">Descrição</label>
             <textarea name="descricao" id="descricao">{{ old('descricao', $tarefa->descricao) }}</textarea>
