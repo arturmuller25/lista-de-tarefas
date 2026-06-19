@@ -19,6 +19,7 @@
 /storage/*.key
 /storage/pail
 /database/database.sqlite
+/iniciar-servidor.bat
 /vendor
 Homestead.json
 Homestead.yaml
